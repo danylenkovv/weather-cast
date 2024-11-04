@@ -1,6 +1,7 @@
 <?php
 
 require_once 'config.php';
+require_once 'key.php';
 
 $classPaths = CLASS_PATHS;
 
