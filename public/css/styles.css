@@ -1,0 +1,470 @@
+body {
+    margin: 0 50px;
+    background-color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header,
+main {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+header {
+    height: 8vh;
+    align-items: center;
+}
+
+main {
+    height: 87vh;
+    flex-direction: column;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    padding: 5px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.other-params h2.city {
+    font-size: 40px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+main .current,
+main .next {
+    width: 100%;
+    height: 50%;
+}
+
+main .current {
+    background: url("../images/sunset.jpg") no-repeat center fixed;
+    background-size: cover;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
+}
+
+main .current>*,
+main .next>*,
+header .full-logo,
+header .options {
+    margin: 0 140px;
+}
+
+main .next {
+    background-color: #ffffff;
+}
+
+.current .temperature {
+    background-color: rgb(138, 43, 226);
+    text-align: center;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.current .icon img,
+.next .icon img {
+    width: 120px;
+    height: 120px;
+    margin: 10px;
+}
+
+.current .temp-value {
+    font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.weather-params {
+    background-color: #ffffffc4;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.weather-params .col {
+    display: flex;
+    flex-direction: column;
+}
+
+.weather-params span {
+    color: rgb(64, 20, 105);
+    display: flex;
+    align-items: center;
+}
+
+.weather-params span i {
+    color: #ffffff;
+    background-color: rgb(138, 43, 226);
+    font-size: 20px;
+    padding: 5px;
+    margin: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-params span i:last-child {
+    font-style: normal;
+}
+
+.full-logo,
+.location,
+.options,
+.search {
+    display: flex;
+    align-items: center;
+}
+
+.options {
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #fff;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.logo img {
+    width: 40px;
+    height: 40px;
+}
+
+.logo-text {
+    font-size: 24px;
+    margin-left: 10px;
+}
+
+footer a,
+.logo-text span:first-child {
+    font-weight: 700;
+}
+
+footer p,
+.logo-text span:last-child,
+.options p {
+    color: rgba(137, 43, 226, 0.5);
+    margin-right: 5px;
+}
+
+.options i,
+footer a,
+.logo-text span:first-child {
+    color: rgb(138, 43, 226);
+}
+
+.options p {
+    margin-left: 10px;
+    margin-right: 100px;
+}
+
+.options .search,
+.options .calendar {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.options .calendar {
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.options p {
+    margin: 0;
+    padding-left: 10px;
+    padding-right: 100px;
+}
+
+a {
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.navigation a {
+    color: rgba(137, 43, 226, 0.5);
+    margin-right: 10px;
+}
+
+.navigation a:hover,
+.links a.active {
+    color: rgba(137, 43, 226);
+    border-bottom: 2px solid rgba(137, 43, 226);
+    padding-bottom: 5px;
+}
+
+.navigation .buttons i {
+    color: rgba(137, 43, 226);
+    margin-left: 20px;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.navigation .buttons i:hover {
+    background-color: rgba(137, 43, 226);
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.weather-items {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.item {
+    height: 100%;
+    width: 100%;
+    background-color: #eceaea;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    text-align: center;
+    padding: 10px;
+}
+
+.item .time>* {
+    border-radius: 15px;
+    color: #ffffff;
+    padding: 5px 10px;
+    margin: 10px 2px;
+}
+
+.item .time span:first-child {
+    background-color: rgb(137, 43, 226);
+}
+
+.item .time span:last-child {
+    background-color: rgba(137, 43, 226, 0.5);
+}
+
+.item .temp-value,
+.item .other-values {
+    color: rgb(137, 43, 226);
+    font-weight: 700;
+    font-size: 40px;
+    margin: 10px;
+}
+
+.item .temp-value span {
+    color: rgba(137, 43, 226, 0.5);
+    font-size: 24px;
+}
+
+.item .other-values {
+    font-size: 16px;
+}
+
+.item .other-values i {
+    margin-right: 5px;
+}
+
+.item.active {
+    background-color: rgb(137, 43, 226);
+}
+
+.item.active>*,
+.item.active span {
+    color: #ffffff;
+}
+
+.item.active .time span:first-child {
+    background-color: rgb(85, 26, 139);
+}
+
+.item.active .time span:last-child {
+    background-color: rgba(170, 87, 248, 0.856)
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 100px auto 0;
+    padding: 20px;
+    border-radius: 10px;
+    width: 500px;
+    height: 500px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.modal-content .caption {
+    text-align: center;
+    margin: 35px 0 10px;
+    font-weight: 700;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: rgb(137, 43, 226);
+}
+
+#datepicker {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#datepicker table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+}
+
+#datepicker td,
+#datepicker th {
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#datepicker td:hover {
+    background-color: rgb(137, 43, 226);
+    color: #fff;
+}
+
+#datepicker td.active {
+    background-color: rgb(137, 43, 226);
+    color: #fff;
+}
+
+#datepicker td {
+    color: rgb(137, 43, 226);
+    width: 14%;
+    border: 4px solid #ffffff;
+}
+
+#datepicker th {
+    color: #000;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.nav-buttons button {
+    padding: 10px 15px;
+    background-color: rgb(137, 43, 226);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.nav-buttons button:hover {
+    background-color: rgb(110, 34, 182);
+}
+
+.inactive-date,
+.inactive-date:hover {
+    color: #999797 !important;
+    background-color: #d6d4d4 !important;
+    cursor: default !important;
+}
+
+.inactive-nav {
+    background-color: #d6d4d4 !important;
+    color: #999797 !important;
+    cursor: default !important;
+}
+
+#modalSearch .modal-content {
+    justify-content: flex-start;
+}
+
+#modalSearch .search {
+    flex-direction: column;
+    align-items: stretch;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+input[type="text"] {
+    flex: 1;
+    height: 22px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 5px;
+    outline-color: rgb(137, 43, 226);
+}
+
+.search-button {
+    background-color: rgb(137, 43, 226);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover {
+    background-color: rgb(106, 34, 170);
+}
+
+.search-result {
+    padding: 5px 10px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.search-result:hover {
+    background-color: #d6d4d4;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
