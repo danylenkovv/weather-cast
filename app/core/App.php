@@ -11,19 +11,20 @@ class App
      * @param string $layout The name of the layouts to use.
      * @return void
      */
-    public function render(string $page, array $data = [], string $layout = 'default'): void
+    public static function render(string $page, array $data = [], string $layout = 'default'): void
     {
         extract($data);
         require "app/views/layouts/{$layout}.php";
     }
 
     /**
-     * Index action that checks if the user is authenticated and retrieves notes if they are.
+     * Index action that render current weather
      *
      * @return void
      */
     public function index(): void
     {
-        $this->render('daily');
+        //TODO Dynamic city change
+        (new WeatherController())->current('Chernihiv');
     }
 }
