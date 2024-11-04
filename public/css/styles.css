@@ -77,9 +77,9 @@ main .next {
 
 .current .icon img,
 .next .icon img {
-    width: 120px;
-    height: 120px;
-    margin: 10px;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
 }
 
 .current .temp-value {
@@ -94,6 +94,7 @@ main .next {
     justify-content: space-between;
     border-radius: 10px;
     padding: 15px;
+    width: 250px;
 }
 
 .weather-params .col {
@@ -238,16 +239,20 @@ a {
     justify-content: space-between;
     align-items: center;
     gap: 30px;
+    overflow: hidden;
+    padding: 0 10px 15px 10px;
 }
 
 .item {
     height: 100%;
-    width: 100%;
+    flex: 0 0 auto;
+    width: calc(100% / 7.4);
     background-color: #eceaea;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); 
     border-radius: 20px;
     text-align: center;
     padding: 10px;
+    overflow: visible;
 }
 
 .item .time>* {
@@ -257,11 +262,12 @@ a {
     margin: 10px 2px;
 }
 
-.item .time span:first-child {
+.item .time div:first-child {
     background-color: rgb(137, 43, 226);
+    margin-top: 0;
 }
 
-.item .time span:last-child {
+.item .time div:last-child {
     background-color: rgba(137, 43, 226, 0.5);
 }
 
@@ -295,11 +301,11 @@ a {
     color: #ffffff;
 }
 
-.item.active .time span:first-child {
+.item.active .time div:first-child {
     background-color: rgb(85, 26, 139);
 }
 
-.item.active .time span:last-child {
+.item.active .time div:last-child {
     background-color: rgba(170, 87, 248, 0.856)
 }
 
