@@ -1,3 +1,39 @@
+// Carousel functionality
+document.addEventListener("DOMContentLoaded", () => {
+    const itemsContainer = document.querySelector(".weather-items");
+    const items = Array.from(itemsContainer.querySelectorAll(".item"));
+    const visibleCount = 7;
+    let startIndex = items.findIndex(item => item.classList.contains("active"));
+
+    function updateCarousel() {
+        // Adjust startIndex to ensure at least 7 items are displayed
+        if (startIndex + visibleCount > items.length + 1) {
+            startIndex = Math.max(0, items.length - visibleCount + 1);
+        }
+
+        items.forEach((item, index) => {
+            item.style.display = (index >= startIndex && index < startIndex + visibleCount) ? "block" : "none";
+        });
+    }
+
+    document.getElementById("next").addEventListener("click", () => {
+        if (startIndex + visibleCount < items.length + 1) {
+            startIndex++;
+            updateCarousel();
+        }
+    });
+
+    document.getElementById("prev").addEventListener("click", () => {
+        if (startIndex > 0) {
+            startIndex--;
+            updateCarousel();
+        }
+    });
+
+    updateCarousel();
+});
+
+
 // Modal functionality
 (function() {
   const modalCalendar = document.getElementById("modalCalendar");
