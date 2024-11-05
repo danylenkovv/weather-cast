@@ -27,4 +27,24 @@ class App
         //TODO Dynamic city change
         (new WeatherController())->current('Chernihiv');
     }
+    /**
+     * Weekly action that render current weather and weekly forecast
+     *
+     * @return void
+     */
+    public function weekly(): void
+    {
+        //TODO Accessable only 7 days
+        (new WeatherController())->weekly('Chernihiv');
+    }
+    /**
+     * twoWeeks action that render current weather and two weeks forecast
+     *
+     * @return void
+     */
+    public function twoWeeks(): void
+    {
+        //TODO Accessable only 14 days
+        (new WeatherController())->weekly('Chernihiv', 14);
+    }
 }
