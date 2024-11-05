@@ -66,10 +66,10 @@
         <div class="next">
             <div class="navigation">
                 <div class="links">
-                    <a href="#">Yesterday</a>
-                    <a href="#" class="active">Today</a>
-                    <a href="#">Weekly</a>
-                    <a href="#">Two weeks</a>
+                    <!-- <a href="#">Yesterday</a> -->
+                    <a href="<?= Router::url('index') ?>">Today</a>
+                    <a href="<?= Router::url('weekly') ?>">Weekly</a>
+                    <a href="<?= Router::url('twoWeeks') ?>">Two weeks</a>
                 </div>
                 <div class="buttons">
                     <i class="fa-solid fa-arrow-left" id="prev"></i>
