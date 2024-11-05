@@ -48,6 +48,31 @@ class Forecast extends Model
     }
 
     /**
+     * Extracts all `day` details from the weekly forecast data.
+     *
+     * @param string $city The name of the city for which to fetch forecast data.
+     * @param int $days The number of forecast days.
+     * @return array An array of forecast dates and daily weather details.
+     */
+    public function getWeekly(string $city, int $days): array
+    {
+        $forecast = $this->getForecast($city, $days);
+        $forecastDays = $forecast['forecast']['forecastday'];
+        $dateAndDayDetails = [];
+
+        foreach ($forecastDays as $day) {
+            $roundedDayData = Helpers::roundValues($day['day'], ['maxwind_kph', 'maxtemp_c', 'mintemp_c']);
+
+            $dateAndDayDetails[] = [
+                'date' => $day['date'],
+                'day' => $roundedDayData
+            ];
+        }
+
+        return $dateAndDayDetails;
+    }
+
+    /**
      * Extracts and formats location details from the forecast data.
      *
      * @param array $forecast The forecast data.
