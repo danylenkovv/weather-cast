@@ -1,14 +1,13 @@
-// Carousel functionality
 document.addEventListener("DOMContentLoaded", () => {
+    // Carousel functionality
     const itemsContainer = document.querySelector(".weather-items");
     const items = Array.from(itemsContainer.querySelectorAll(".item"));
     const visibleCount = 7;
     let startIndex = items.findIndex(item => item.classList.contains("active"));
 
     function updateCarousel() {
-        // Adjust startIndex to ensure at least 7 items are displayed
         if (startIndex + visibleCount > items.length + 1) {
-            startIndex = Math.max(0, items.length - visibleCount + 1);
+            startIndex = Math.max(0, items.length +1 - visibleCount);
         }
 
         items.forEach((item, index) => {
@@ -30,9 +29,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    //Add active class to links
+    function setActiveLink() {
+        const currentAction = new URLSearchParams(window.location.search).get("action");
+        const links = document.querySelectorAll(".links a");
+
+        links.forEach(link => {
+            const linkAction = new URL(link.href).searchParams.get("action");
+            if (linkAction === currentAction) {
+                link.classList.add("active");
+            } else {
+                link.classList.remove("active");
+            }
+        });
+    }
+
+    setActiveLink();
     updateCarousel();
 });
-
 
 // Modal functionality
 (function() {
