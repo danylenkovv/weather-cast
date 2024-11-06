@@ -42,4 +42,8 @@ class Helpers
         $date = new DateTime($datetime);
         return $date->format('l, F j, Y');
     }
+    public static function getUrlParam(string $param)
+    {
+        return isset($_GET[$param]) ? $_GET[$param] : null;
+    }
 }
