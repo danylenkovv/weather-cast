@@ -47,4 +47,15 @@ class App
         //TODO Accessable only 14 days
         (new WeatherController())->weekly('Chernihiv', 14);
     }
+
+    /**
+     * Daily action that render weather for a specified date
+     *
+     * @return void
+     */
+    public function daily(): void
+    {
+        //TODO Accessable only 14 days
+        (new WeatherController())->daily('Chernihiv', Helpers::getUrlParam('date'));
+    }
 }
