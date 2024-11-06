@@ -254,7 +254,16 @@ a {
     padding: 10px;
     overflow: visible;
 }
+.item-link {
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+}
 
+.item:hover {
+    cursor: pointer;
+}
 .item .time>* {
     border-radius: 15px;
     color: #ffffff;
@@ -296,8 +305,9 @@ a {
     background-color: rgb(137, 43, 226);
 }
 
-.item.active>*,
-.item.active span {
+.item.active > *,
+.item.active span, 
+.item.active .temp-value {
     color: #ffffff;
 }
 
