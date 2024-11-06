@@ -37,44 +37,11 @@
     </header>
     <main>
         <div class="current">
-            <div class="other-params">
-                <h2 class="city"><?= $current['location']['name'] . ', ' . $current['location']['region'] . ", " . $current['location']['country'] ?></h2>
-                <p class="date">
-                    <?= $current['current']['formatted_date'] ?> <span>Updated at: <?= $current['current']['time'] ?></span>
-                </p>
-                <div class="weather-params">
-                    <div class="col">
-                        <span><i class="fa-solid fa-wind"></i> <?= $current['hour_forecast']['wind_kph'] ?> kph</span>
-                        <span><i class="fa-solid fa-compass"></i><?= $current['hour_forecast']['wind_dir'] ?></span>
-                        <span><i class="fa-solid fa-droplet"></i><?= $current['hour_forecast']['humidity'] ?>%</span>
-                    </div>
-                    <div class="col">
-                        <span><i class="fa-solid fa-cloud"></i><?= $current['hour_forecast']['cloud'] ?>%</span>
-                        <span><i class="fa-solid fa-cloud-rain"></i><?= $current['hour_forecast']['chance_of_rain'] ?>%</span>
-                        <span><i class="fa-regular fa-snowflake"></i><?= $current['hour_forecast']['chance_of_snow'] ?>%</span>
-                    </div>
-                </div>
-            </div>
-            <div class="temperature">
-                <div class="icon">
-                    <img src="<?= $current['hour_forecast']['condition']['icon'] ?>" alt="Weatger Icon" />
-                </div>
-                <div class="temp-value"><?= $current['hour_forecast']['temp_c'] ?>&deg; C</div>
-                <div class="temp-interval"><?= $current['daily']['mintemp_c'] ?>&deg; C - <?= $current['daily']['maxtemp_c'] ?>&deg; C</div>
-            </div>
+            <?php include_once(COMMON_PATH . 'main_section.php'); ?>
         </div>
         <div class="next">
             <div class="navigation">
-                <div class="links">
-                    <!-- <a href="#">Yesterday</a> -->
-                    <a href="<?= Router::url('index') ?>">Today</a>
-                    <a href="<?= Router::url('weekly') ?>">Weekly</a>
-                    <a href="<?= Router::url('twoWeeks') ?>">Two weeks</a>
-                </div>
-                <div class="buttons">
-                    <i class="fa-solid fa-arrow-left" id="prev"></i>
-                    <i class="fa-solid fa-arrow-right" id="next"></i>
-                </div>
+                <?php include_once(COMMON_PATH . 'navigation.php'); ?>
             </div>
             <div class="weather-items">
                 <?php include_once(PAGES_PATH . $page . '.php'); ?>
