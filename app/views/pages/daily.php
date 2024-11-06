@@ -13,7 +13,7 @@
         </div>
         <div class="other-values">
             <span><i class="fa-solid fa-wind"></i> <?= $hour['wind_kph']; ?> kph,</span>
-            <span><i class="fa-solid fa-cloud-rain"></i> <?= $hour['humidity']; ?>%</span>
+            <span><i class="fa-solid fa-cloud-rain"></i> <?= $hour['chance_of_rain']; ?>%</span>
         </div>
     </div>
 <?php endforeach; ?>
