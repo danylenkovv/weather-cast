@@ -38,4 +38,22 @@ class WeatherController
             'weekly' => $weeklyWeather
         ]);
     }
+
+    /**
+     * Displays the average weather and hourly forecast for the specified city and date.
+     *
+     * @param string $city The name of the city for which to display weather data.
+     * @param string $date The date for which to display detailed weather data.
+     * @return void
+     */
+    public function daily(string $city, string $date): void
+    {
+        $model = new Daily();
+        $dailyWeather = $model->getForecastByDate($date, $city);
+
+        App::render('daily', [
+            'current' => $dailyWeather,
+            'hours' => $dailyWeather['hour']
+        ]);
+    }
 }
