@@ -11,12 +11,15 @@ class WeatherController
     public function current(string $city): void
     {
         $model = new Forecast();
-        $currentWeather = $model->getCurrent($city);
-        $hourlyWeather = $model->getAllDayHours($city);
+        $forecast = $model->getForecast($city);
+        $currentWeather = $model->getCurrent($forecast);
+        unset($forecast);
 
         App::render('daily', [
-            'current' => $currentWeather,
-            'hours' => $hourlyWeather
+            'location' => $currentWeather['location'],
+            'last_updated' => $currentWeather['last_updated'],
+            'current' => $currentWeather['current'],
+            'hours' => $currentWeather['hours']
         ]);
     }
 
@@ -27,15 +30,18 @@ class WeatherController
      * @param int $days The number of days for forecast - 7 or 14.
      * @return void
      */
-    public function weekly(string $city, int $days = 7): void
+    public function weekly(string $city, int $days): void
     {
         $model = new Forecast();
-        $currentWeather = $model->getCurrent($city);
-        $weeklyWeather = $model->getWeekly($city, $days);
+        $forecast = $model->getForecast($city, $days);
+        $weeklyWeather = $model->getWeekly($forecast);
+        unset($forecast);
 
         App::render('weekly', [
-            'current' => $currentWeather,
-            'weekly' => $weeklyWeather
+            'location' => $weeklyWeather['location'],
+            'last_updated' => $weeklyWeather['last_updated'],
+            'current' => $weeklyWeather['current'],
+            'days' => $weeklyWeather['days']
         ]);
     }
 
@@ -44,16 +50,21 @@ class WeatherController
      *
      * @param string $city The name of the city for which to display weather data.
      * @param string $date The date for which to display detailed weather data.
+     * @param int $days The number of days for forecast - 14.
      * @return void
      */
-    public function daily(string $city, string $date): void
+    public function daily(string $city, string $date, int $days): void
     {
-        $model = new Daily();
-        $dailyWeather = $model->getForecastByDate($date, $city);
+        $model = new Forecast();
+        $forecast = $model->getForecast($city, $days);
+        $dailyWeather = $model->getForecastByDate($forecast, $date);
+        unset($forecast);
 
         App::render('daily', [
-            'current' => $dailyWeather,
-            'hours' => $dailyWeather['hour']
+            'location' => $dailyWeather['location'],
+            'last_updated' => $dailyWeather['last_updated'],
+            'current' => $dailyWeather['current'],
+            'hours' => $dailyWeather['hours']
         ]);
     }
 }
