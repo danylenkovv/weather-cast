@@ -1,5 +1,5 @@
 <div class="links">
-    <!-- <a href="#">Yesterday</a> -->
+    <a href="<?= Router::url('yesterday') ?>">Yesterday</a>
     <a href="<?= Router::url('index') ?>">Today</a>
     <a href="<?= Router::url('weekly') ?>">Weekly</a>
     <a href="<?= Router::url('twoWeeks') ?>">Two weeks</a>

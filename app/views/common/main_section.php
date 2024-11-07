@@ -1,7 +1,10 @@
     <div class="other-params">
         <h2 class="city"><?= $location['name'] . ', ' . $location['region'] . ", " . $location['country'] ?></h2>
         <p class="date">
-            <?= $current['date'] ?> <span>Updated at: <?= $last_updated['last_updated'] ?></span>
+            <?= $current['date'] ?>
+            <?php if (isset($_GET['action']) && $_GET['action'] != 'yesterday' && $_GET['action'] != 'specificDay') : ?>
+                <span>Updated at: <?= $last_updated['last_updated'] ?></span>
+            <?php endif; ?>
         </p>
         <div class="weather-params">
             <div class="col">
