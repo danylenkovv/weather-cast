@@ -58,4 +58,10 @@ class App
         //TODO Accessable only 14 days
         (new WeatherController())->daily('Chernihiv', Helpers::getUrlParam('date'), 14);
     }
+
+    public function yesterday(): void
+    {
+        //TODO Accessable only 14 days
+        (new WeatherController())->yesterday('Chernihiv');
+    }
 }
