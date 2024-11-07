@@ -67,4 +67,19 @@ class WeatherController
             'hours' => $dailyWeather['hours']
         ]);
     }
+
+    public function yesterday(string $city)
+    {
+        $model = new SpecificDay();
+        $date = date('Y-m-d', strtotime('-1 day'));
+        $forecast = $model->getHistoryForecast($city, $date);
+        $specificDayWeather = $model->getSpecificDay($forecast);
+        unset($forecast);
+
+        App::render('daily', [
+            'location' => $specificDayWeather['location'],
+            'current' => $specificDayWeather['current'],
+            'hours' => $specificDayWeather['hours']
+        ]);
+    }
 }
