@@ -28,7 +28,7 @@
             <div class="search">
                 <div class="location">
                     <i class="fa-regular fa-paper-plane"></i>
-                    <p><?= $current['location']['name'] ?></p>
+                    <p><?= $location['name'] ?></p>
                 </div>
                 <div><i class="fa-solid fa-magnifying-glass"></i></div>
             </div>

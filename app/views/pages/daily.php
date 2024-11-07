@@ -1,10 +1,10 @@
 <?php foreach ($hours as $hour): ?>
     <div class="item <?= date('H:00') === $hour['time'] ? 'active' : ''; ?>">
         <div class="icon">
-            <img src="<?= $hour['condition']['icon']; ?>" alt="Weather Icon" />
+            <img src="<?= $hour['icon']; ?>" alt="Weather Icon" />
         </div>
         <div class="time">
-            <div class="weather-type"><?= $hour['condition']['text']; ?></div>
+            <div class="weather-type"><?= $hour['condition']; ?></div>
             <div class="date-time"><?= $hour['time']; ?></div>
         </div>
         <div class="temp-value">
