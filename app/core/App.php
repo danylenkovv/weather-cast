@@ -35,7 +35,7 @@ class App
     public function weekly(): void
     {
         //TODO Accessable only 7 days
-        (new WeatherController())->weekly('Chernihiv');
+        (new WeatherController())->weekly('Chernihiv', 7);
     }
     /**
      * twoWeeks action that render current weather and two weeks forecast
@@ -56,6 +56,6 @@ class App
     public function daily(): void
     {
         //TODO Accessable only 14 days
-        (new WeatherController())->daily('Chernihiv', Helpers::getUrlParam('date'));
+        (new WeatherController())->daily('Chernihiv', Helpers::getUrlParam('date'), 14);
     }
 }
