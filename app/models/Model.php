@@ -29,18 +29,17 @@ class Model
      *
      * @param string $endpoint The API endpoint to access.
      * @param string $city The city name for which to fetch weather data.
-     * @param int|null $days The number of days for forecast (optional).
-     * @param string|null $date The specific date for weather data in YYYY-MM-DD format (optional).
+     * @param mixed $dayOrDate The number of days for forecast or data in YYYY-MM-DD format (optional).
      * @return string The constructed API URL.
      */
-    public function getApiUrl(string $endpoint, string $city, ?int $days = null, ?string $date = null): string
+    public function getApiUrl(string $endpoint, string $city, mixed $daysOrDate = null): string
     {
         $url = $this->apiUrl . $endpoint . '?key=' . $this->apiKey . '&q=' . $city;
 
-        if ($date) {
-            $url .= '&dt=' . $date;
-        } elseif ($days) {
-            $url .= '&days=' . $days;
+        if (is_string($daysOrDate)) {
+            $url .= '&dt=' . $daysOrDate;
+        } elseif (is_int($daysOrDate)) {
+            $url .= '&days=' . $daysOrDate;
         }
 
         return $url;
