@@ -24,8 +24,7 @@ class App
      */
     public function index(): void
     {
-        //TODO Dynamic city change
-        (new WeatherController())->current('Chernihiv');
+        (new WeatherController())->current(Session::get('city'));
     }
     /**
      * Weekly action that render current weather and weekly forecast
@@ -35,7 +34,7 @@ class App
     public function weekly(): void
     {
         //TODO Accessable only 7 days
-        (new WeatherController())->weekly('Chernihiv', 7);
+        (new WeatherController())->weekly(Session::get('city'), 7);
     }
     /**
      * twoWeeks action that render current weather and two weeks forecast
@@ -45,7 +44,7 @@ class App
     public function two_weeks(): void
     {
         //TODO Accessable only 14 days
-        (new WeatherController())->weekly('Chernihiv', 14);
+        (new WeatherController())->weekly(Session::get('city'), 14);
     }
 
     /**
@@ -55,7 +54,7 @@ class App
      */
     public function daily(): void
     {
-        (new WeatherController())->daily('Chernihiv', Helpers::getUrlParam('date'), 14);
+        (new WeatherController())->daily(Session::get('city'), Helpers::getUrlParam('date'), 14);
     }
 
     /**
@@ -65,7 +64,7 @@ class App
      */
     public function yesterday(): void
     {
-        (new WeatherController())->yesterday('Chernihiv');
+        (new WeatherController())->yesterday(Session::get('city'));
     }
 
     /**
@@ -76,6 +75,6 @@ class App
      */
     public function specific_day(): void
     {
-        (new WeatherController())->specificDay('Chernihiv', Helpers::getUrlParam('date'));
+        (new WeatherController())->specificDay(Session::get('city'), Helpers::getUrlParam('date'));
     }
 }
