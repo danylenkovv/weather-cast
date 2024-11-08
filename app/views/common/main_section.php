@@ -2,7 +2,7 @@
         <h2 class="city"><?= $location['name'] . ', ' . $location['region'] . ", " . $location['country'] ?></h2>
         <p class="date">
             <?= $current['date'] ?>
-            <?php if (isset($_GET['action']) && $_GET['action'] != 'yesterday' && $_GET['action'] != 'specificDay') : ?>
+            <?php if (isset($_GET['action']) && $_GET['action'] != 'yesterday' && $_GET['action'] != 'specific_day') : ?>
                 <span>Updated at: <?= $last_updated['last_updated'] ?></span>
             <?php endif; ?>
         </p>
