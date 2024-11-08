@@ -82,4 +82,30 @@ class WeatherController
             'hours' => $specificDayWeather['hours']
         ]);
     }
+
+    public function specificDay(string $city, string $date)
+    {
+        $model = new SpecificDay();
+        $currentDate = new DateTime();
+        $selectedDate = new DateTime($date);
+        $dateDifference = $currentDate->diff($selectedDate)->days;
+
+        if ($selectedDate < $currentDate) {
+            $forecast = $model->getHistoryForecast($city, $date);
+        } elseif ($dateDifference >= 13) {
+            $forecast = $model->getFutureForecast($city, $date);
+        } else {
+            Router::redirect("daily&date={$date}");
+            return;
+        }
+
+        $specificDayWeather = $model->getSpecificDay($forecast);
+        unset($forecast);
+
+        App::render('daily', [
+            'location' => $specificDayWeather['location'],
+            'current' => $specificDayWeather['current'],
+            'hours' => $specificDayWeather['hours']
+        ]);
+    }
 }
