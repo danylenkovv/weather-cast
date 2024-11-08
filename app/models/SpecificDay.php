@@ -39,10 +39,17 @@ class SpecificDay extends Forecast
      */
     public function getSpecificDay($forecast): array
     {
+        $current = $this->extractDailyAvgData($forecast['forecast']);
+        $hours = $this->extractAllHours($forecast['forecast']['forecastday'][0]['hour'] ?? []);
+
+        $avgData = Helpers::getAvgValue(['chance_of_rain', 'chance_of_snow'], $hours);
+        $current['current']['chance_of_rain'] = $current['current']['chance_of_rain'] ?? $avgData['chance_of_rain'];
+        $current['current']['chance_of_snow'] = $current['current']['chance_of_snow'] ?? $avgData['chance_of_snow'];
+
         return [
             'location' => $this->extractLocation($forecast),
-            'current' => $this->extractDailyAvgData($forecast['forecast']),
-            'hours' => $this->extractAllHours($forecast['forecast']['forecastday'][0]['hour'] ?? [])
+            'current' => $current,
+            'hours' => $hours
         ];
     }
 }
