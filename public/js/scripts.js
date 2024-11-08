@@ -141,7 +141,7 @@ function createDatePicker() {
         } else {
           const cellDate = new Date(year, month, date);
           const isValid = cellDate >= startDate && cellDate <= endDate;
-          fillDate(cell, date++, isValid ? "" : "inactive-date", isValid ? handleActiveDateSelection : null);
+          fillDate(cell, date++, isValid ? "" : "inactive-date", isValid ? () => handleActiveDateSelection(cellDate) : null);
         }
         row.appendChild(cell);
       }
@@ -159,9 +159,13 @@ function createDatePicker() {
     });
   };
 
-  const handleActiveDateSelection = () => {
-    //TODO Implement functionality for when a valid date is selected
+  const handleActiveDateSelection = (selectedDate) => {
+  selectedDate.setHours(12, 0, 0, 0);
+  
+  const formattedDate = selectedDate.toISOString().split('T')[0];
+  window.location.href = `index.php?action=specific_day&date=${formattedDate}`;
   };
+
 
   const updateNavButtons = (month, year) => {
     const prevButton = document.getElementById("prevMonth");
