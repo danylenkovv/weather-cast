@@ -52,4 +52,23 @@ class Helpers
     {
         return isset($_GET[$param]) ? $_GET[$param] : null;
     }
+
+    /**
+     * Calculate the average values for specified fields from an array of data.
+     * @param array $fields The list of fields for which the average needs to be calculated.
+     * @param array $data The data array containing the values to be averaged.
+     * @return array An associative array where each key is a field and the value is its average.
+     */
+    public static function getAvgValue(array $fields, array $data): array
+    {
+        $average = [];
+        foreach ($fields as $field) {
+            $result = [];
+            foreach ($data as $d) {
+                $result[] = $d[$field];
+            }
+            $average[$field] = round(array_sum($result) / count($result));
+        }
+        return $average;
+    }
 }
