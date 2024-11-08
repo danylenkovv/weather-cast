@@ -55,16 +55,25 @@ class App
      */
     public function daily(): void
     {
-        //TODO Accessable only 14 days
         (new WeatherController())->daily('Chernihiv', Helpers::getUrlParam('date'), 14);
     }
 
+    /**
+     * Yesterday action tnat render forecast for the previous day
+     *
+     * @return void
+     */
     public function yesterday(): void
     {
-        //TODO Accessable only 14 days
         (new WeatherController())->yesterday('Chernihiv');
     }
 
+    /**
+     * Specific day action thet render forecast for a specific date.
+     * The date is retrieved from the URL parameters.
+     *
+     * @return void
+     */
     public function specific_day(): void
     {
         (new WeatherController())->specificDay('Chernihiv', Helpers::getUrlParam('date'));

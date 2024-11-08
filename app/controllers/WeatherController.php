@@ -68,6 +68,11 @@ class WeatherController
         ]);
     }
 
+    /**
+     * Displays the weather forecast for the previous day.
+     *
+     * @param string $city The city for which the forecast is to be retrieved.
+     */
     public function yesterday(string $city)
     {
         $model = new SpecificDay();
@@ -83,6 +88,12 @@ class WeatherController
         ]);
     }
 
+    /**
+     * Displays the weather forecast for a specific date, adjusting based on whether the date is past, future, or near-future.
+     *
+     * @param string $city The city for which the forecast is to be retrieved.
+     * @param string $date The specific date for the forecast in 'Y-m-d' format.
+     */
     public function specificDay(string $city, string $date)
     {
         $model = new SpecificDay();

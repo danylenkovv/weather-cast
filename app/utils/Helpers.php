@@ -42,7 +42,13 @@ class Helpers
         $date = new DateTime($datetime);
         return $date->format('l, F j, Y');
     }
-    public static function getUrlParam(string $param)
+    /**
+     * Retrieves a URL parameter from the GET request.
+     *
+     * @param string $param The name of the parameter to retrieve.
+     * @return string|null The value of the parameter if it exists, otherwise null.
+     */
+    public static function getUrlParam(string $param): string|null
     {
         return isset($_GET[$param]) ? $_GET[$param] : null;
     }
