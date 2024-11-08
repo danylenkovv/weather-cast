@@ -42,7 +42,7 @@ class App
      *
      * @return void
      */
-    public function twoWeeks(): void
+    public function two_weeks(): void
     {
         //TODO Accessable only 14 days
         (new WeatherController())->weekly('Chernihiv', 14);
@@ -63,5 +63,10 @@ class App
     {
         //TODO Accessable only 14 days
         (new WeatherController())->yesterday('Chernihiv');
+    }
+
+    public function specific_day(): void
+    {
+        (new WeatherController())->specificDay('Chernihiv', Helpers::getUrlParam('date'));
     }
 }
