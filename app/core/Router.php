@@ -16,6 +16,10 @@ class Router
      */
     public function init(): void
     {
+        Session::start();
+        if (!Session::get('city')) {
+            Session::set('city', 'Chernihiv');
+        }
         $action = $this->getAction();
 
         if (method_exists($this->app, $action)) {
