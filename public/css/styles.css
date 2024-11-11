@@ -484,3 +484,16 @@ input[type="text"] {
     background-color: #d6d4d4;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
+
+#message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    font-size: 16px;
+    color: #333;
+}
+
+.hidden {
+    display: none;
+}
