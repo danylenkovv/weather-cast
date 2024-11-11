@@ -77,4 +77,26 @@ class App
     {
         (new WeatherController())->specificDay(Session::get('city'), Helpers::getUrlParam('date'));
     }
+
+    /**
+     * Search city action that invokes the searchCity method - get all search results
+     * The query is retrieved from the POST data.
+     *
+     * @return void
+     */
+    public function searchCity(): void
+    {
+        (new WeatherController())->searchCity(Helpers::getPostData('query'));
+    }
+
+    /**
+     * Set city action that invokes the setCity method - change city in the session
+     * The query is retrieved from the POST data.
+     *
+     * @return void
+     */
+    public function setCity(): void
+    {
+        (new WeatherController())->setCity(Helpers::getPostData('city'));
+    }
 }
