@@ -54,6 +54,17 @@ class Helpers
     }
 
     /**
+     * Retrieves data from the POST request.
+     *
+     * @param string $param The name of the parameter to retrieve.
+     * @return string|null The value of the parameter if it exists, otherwise null.
+     */
+    public static function getPostData(string $data): string|null
+    {
+        return isset($_POST[$data]) ? $_POST[$data] : null;
+    }
+
+    /**
      * Calculate the average values for specified fields from an array of data.
      * @param array $fields The list of fields for which the average needs to be calculated.
      * @param array $data The data array containing the values to be averaged.
