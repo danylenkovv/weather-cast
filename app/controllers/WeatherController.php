@@ -119,4 +119,48 @@ class WeatherController
             'hours' => $specificDayWeather['hours']
         ]);
     }
+
+    /**
+     * Handles the search for a city based on the provided query string.
+     * Outputs the search results as a JSON response.
+     *
+     * @param string $query The city name or keyword to search for.
+     * @return void
+     */
+    public function searchCity(string $query): void
+    {
+        header('Content-Type: application/json');
+
+        if (empty($query)) {
+            echo json_encode([]);
+            exit;
+        }
+
+        $model = new Search();
+        $result = $model->getSearchResults($query);
+        $cities = $model->getCities($result);
+
+        echo json_encode($cities);
+        exit;
+    }
+
+    /**
+     * Sets the specified city in the session.
+     * Returns an HTTP status code of 200 if successful, or 400 if the city parameter is empty.
+     *
+     * @param string $city The name of the city to set in the session.
+     * @return void
+     */
+    public function setCity(string $city): void
+    {
+        if (empty($city)) {
+            http_response_code(400);
+            return;
+        }
+
+        Session::destroy();
+        Session::start();
+        Session::set('city', $city);
+        http_response_code(200);
+    }
 }
