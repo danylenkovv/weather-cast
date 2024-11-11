@@ -26,7 +26,7 @@ class Forecast extends Model
     public function getCurrent(array $forecast): array
     {
         return [
-            'location' => $this->extractLocation($forecast),
+            'location' => $this->extractLocation($forecast['location']),
             'last_updated' => $this->extractLastUpdated($forecast),
             'current' => $this->extractCurrentWeather($forecast),
             'hours' => $this->extractAllHours($forecast['forecast']['forecastday'][0]['hour'])
@@ -42,7 +42,7 @@ class Forecast extends Model
     public function getWeekly(array $forecast): array
     {
         return [
-            'location' => $this->extractLocation($forecast),
+            'location' => $this->extractLocation($forecast['location']),
             'last_updated' => $this->extractLastUpdated($forecast),
             'current' => $this->extractCurrentWeather($forecast),
             'days' => $this->extractAllDays($forecast['forecast']['forecastday'])
@@ -60,7 +60,7 @@ class Forecast extends Model
     {
         $dayForecast = $this->findDayForecast($forecast['forecast']['forecastday'] ?? [], $date);
         return [
-            'location' => $this->extractLocation($forecast),
+            'location' => $this->extractLocation($forecast['location']),
             'last_updated' => $this->extractLastUpdated($forecast),
             'current' => $this->extractDailyAvgData($dayForecast),
             'hours' => $this->extractAllHours($dayForecast['forecastday'][0]['hour'] ?? [])
@@ -76,9 +76,9 @@ class Forecast extends Model
     protected function extractLocation(array $forecast): array
     {
         return [
-            'name' => $forecast['location']['name'],
-            'region' => $forecast['location']['region'],
-            'country' => $forecast['location']['country']
+            'name' => $forecast['name'],
+            'region' => $forecast['region'],
+            'country' => $forecast['country']
         ];
     }
 
@@ -119,7 +119,7 @@ class Forecast extends Model
      */
     protected function extractCurrentHour(array $forecast): array
     {
-        $currentHour = $forecast['forecast']['forecastday'][0]['hour'][date('H')];
+        $currentHour = $forecast['forecast']['forecastday'][0]['hour'][date('G')];
         return Helpers::roundValues([
             'temp_c' => $currentHour['temp_c'],
             'wind_kph' => $currentHour['wind_kph'],
