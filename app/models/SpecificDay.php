@@ -47,7 +47,7 @@ class SpecificDay extends Forecast
         $current['current']['chance_of_snow'] = $current['current']['chance_of_snow'] ?? $avgData['chance_of_snow'];
 
         return [
-            'location' => $this->extractLocation($forecast),
+            'location' => $this->extractLocation($forecast['location']),
             'current' => $current,
             'hours' => $hours
         ];
