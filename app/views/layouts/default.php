@@ -55,6 +55,7 @@
     <div id="modalCalendar" class="modal"><?php include_once(MODALS_PATH . 'calendar.php'); ?></div>
     <div id="modalSearch" class="modal"><?php include_once(MODALS_PATH . 'search.php'); ?></div>
     <script src="<?= JS_PATH . 'scripts.js'; ?>"></script>
+    <script src="<?= JS_PATH . 'app.js'; ?>"></script>
 </body>
 
 </html>
