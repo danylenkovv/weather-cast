@@ -16,36 +16,15 @@
 
 <body>
     <header>
-        <a href="index.php">
-            <div class="full-logo">
-                <div class="logo">
-                    <img src="<?= IMG_PATH . 'moon.png'; ?>" alt="Moon Logo" />
-                </div>
-                <div class="logo-text"><span>WEATHER</span> <span>CAST</span></div>
-            </div>
-        </a>
-        <div class="options">
-            <div class="search">
-                <div class="location">
-                    <i class="fa-regular fa-paper-plane"></i>
-                    <p><?= $location['name'] ?></p>
-                </div>
-                <div><i class="fa-solid fa-magnifying-glass"></i></div>
-            </div>
-            <div class="calendar"><i class="fa-solid fa-calendar-days"></i></div>
-        </div>
+        <?php include_once(COMMON_PATH . 'header.php'); ?>
     </header>
     <main>
         <div class="current">
             <?php include_once(COMMON_PATH . 'main_section.php'); ?>
         </div>
         <div class="next">
-            <div class="navigation">
-                <?php include_once(COMMON_PATH . 'navigation.php'); ?>
-            </div>
-            <div class="weather-items">
-                <?php include_once(PAGES_PATH . $page . '.php'); ?>
-            </div>
+            <?php include_once(COMMON_PATH . 'navigation.php'); ?>
+            <?php include_once(PAGES_PATH . $page . '.php'); ?>
         </div>
     </main>
     <footer>

@@ -1,3 +1,4 @@
+<?php if (!empty($current)): ?>
     <div class="other-params">
         <h2 class="city"><?= $location['name'] . ', ' . $location['region'] . ", " . $location['country'] ?></h2>
         <p class="date">
@@ -24,3 +25,6 @@
         <div class="temp-value"><?= $current['current']['temp_c'] ?>&deg; C</div>
         <div class="temp-interval"><?= $current['daily_temps']['mintemp_c'] ?>&deg; C - <?= $current['daily_temps']['maxtemp_c'] ?>&deg; C</div>
     </div>
+<?php else: ?>
+    <div class="error-code"><?= $status_code . ' ' . $error ?></div>
+<?php endif; ?>
