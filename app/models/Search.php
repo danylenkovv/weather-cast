@@ -1,6 +1,6 @@
 <?php
 
-class Search extends Forecast
+class Search extends Model
 {
     private string $endpoint = 'search.json';
 

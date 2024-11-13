@@ -1,6 +1,6 @@
 <?php
 
-class SpecificDay extends Forecast
+class SpecificDay extends Model
 {
     private string $endpointHistory = 'history.json';
     private string $endpointFuture = 'future.json';
