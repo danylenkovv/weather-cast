@@ -34,6 +34,7 @@ class Model
      */
     public function getApiUrl(string $endpoint, string $city, mixed $daysOrDate = null): string
     {
+        $city = urlencode($city);
         $url = $this->apiUrl . $endpoint . '?key=' . $this->apiKey . '&q=' . $city;
 
         if (is_string($daysOrDate)) {
