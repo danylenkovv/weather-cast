@@ -25,7 +25,12 @@ class Router
         if (method_exists($this->app, $action)) {
             $this->app->$action();
         } else {
-            self::notFound();
+            http_response_code(404);
+            $this->app::render('errors', [
+                'status_code' => 404,
+                'error' => 'Not found',
+                'description' => 'The requested URL was not found'
+            ]);
         }
     }
 
@@ -37,18 +42,6 @@ class Router
     private function getAction(): string
     {
         return $_GET['action'] ?? 'index';
-    }
-
-    /**
-     * Generates a 404 response.
-     *
-     * @return void
-     */
-    public static function notFound(): void
-    {
-        http_response_code(404);
-        echo "404 - Page not found";
-        exit();
     }
 
     /**
