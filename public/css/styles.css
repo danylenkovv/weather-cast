@@ -55,6 +55,7 @@ main .current {
     justify-content: space-between;
     align-items: center;
     color: #ffffff;
+    position: relative;
 }
 
 main .current>*,
@@ -96,7 +97,18 @@ main .next {
     padding: 15px;
     width: 250px;
 }
-
+.error-code{
+    background-color: #ffffffc4;
+    border-radius: 10px;
+    padding: 25px;
+    font-size: 40px;
+    font-weight: bold;
+    color: rgb(138, 43, 226);
+    position: absolute;
+    top: 250px;
+    left: 50%;
+    transform: translateX(-95%);
+}
 .weather-params .col {
     display: flex;
     flex-direction: column;
@@ -253,6 +265,14 @@ a {
     text-align: center;
     padding: 10px;
     overflow: visible;
+}
+.error-description{
+    background-color: #eceaea;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
 }
 .item-link {
     display: block;
