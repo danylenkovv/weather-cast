@@ -13,7 +13,5 @@
             </button>
         </form>
     </div>
-    <div id="searchResults" class="search">
-        <div id="message" class="hidden"></div>
-    </div>
+    <div id="searchResults" class="search"></div>
 </div>
