@@ -11,7 +11,7 @@ class Model
      * @param string $url The URL to fetch data from.
      * @return array|null The decoded JSON response as an associative array, or null on failure.
      */
-    protected function fetchData(string $url): ?array
+    protected function fetchData(string $url): array
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -21,8 +21,19 @@ class Model
         $response = curl_exec($ch);
         curl_close($ch);
 
-        return json_decode($response, true);
+        $decodedResponse = json_decode($response, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new ApiException('Bad Gateway', 502, null, 'The remote server returned invalid response, please try again later');
+        }
+
+        if (isset($decodedResponse['error'])) {
+            throw new ApiException('Bad Request', 400, null, 'The server responded with an error, please return to the main page');
+        }
+
+        return is_array($decodedResponse) ? $decodedResponse : [];
     }
+
 
     /**
      * Constructs the API URL with required query parameters.
