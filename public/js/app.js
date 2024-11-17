@@ -1,37 +1,54 @@
 $(document).ready(function() {
+    const modalContent = $('.modal-content');
+    const messageTemplate = $('<div id="message"></div>'); 
+
     $('#searchButton').on('click', function() {
         const cityQuery = $('#cityInput').val().trim();
-        const messageContainer = $('#message');
         const resultsContainer = $('#searchResults');
 
-        if (cityQuery) {
-            $.ajax({
-                url: '/index.php?action=searchCity',
-                method: 'POST',
-                data: { query: cityQuery },
-                success: function(response) {
-                    resultsContainer.empty();
-                        response.forEach(city => {
-                            const cityItem = $(`
-                                <div class="search-result" data-city="${city.name}">
-                                    <p class="city-name">${city.name}</p>
-                                    <p class="country">${city.country}, ${city.region}</p>
-                                </div>
-                            `);
-                            cityItem.on('click', function() {
-                                selectCity(city.name);
-                            });
-                            resultsContainer.append(cityItem);
-                        });
-                },
-                error: function(xhr, status, error) {
-                    messageContainer.text('No results found').removeClass('hidden');
-                    console.error('Error due to city search: ', status, error);
-                }
-            });
-        } else {
-            messageContainer.text('Please, enter city for search').removeClass('hidden');
+        modalContent.find('#message').remove();
+        resultsContainer.empty();
+
+        if (cityQuery === '') {
+            const message = messageTemplate.clone().text('Please, enter a city to search');
+            modalContent.append(message);
+            return;
         }
+
+        $.ajax({
+            url: '/index.php?action=searchCity',
+            method: 'POST',
+            data: { query: cityQuery },
+            success: function(response) {
+                resultsContainer.empty();
+
+                if (Array.isArray(response) && response.length === 0) {
+                    const message = messageTemplate.clone().text('No results found');
+                    modalContent.append(message);
+                } else if (Array.isArray(response)) {
+                    response.forEach(city => {
+                        const cityItem = $(`
+                            <div class="search-result" data-city="${city.name}">
+                                <p class="city-name">${city.name}</p>
+                                <p class="country">${city.country}, ${city.region}</p>
+                            </div>
+                        `);
+                        cityItem.on('click', function() {
+                            selectCity(city.name);
+                        });
+                        resultsContainer.append(cityItem);
+                    });
+                } else {
+                    const message = messageTemplate.clone().text('Unexpected response format, please try again later');
+                    modalContent.append(message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error during city search:', status, error);
+                const message = messageTemplate.clone().text('Error during city search, please try again later');
+                modalContent.append(message);
+            }
+        });
     });
 
     function selectCity(cityName) {
@@ -40,10 +57,10 @@ $(document).ready(function() {
             method: 'POST',
             data: { city: cityName },
             success: function() {
-                window.location.href = '/index.php';
+                window.location.href = '/index.php?action=index';
             },
             error: function(xhr, status, error) {
-                console.error('Error due to city selection: ', status, error);
+                console.error('Error during city selection:', status, error);
             }
         });
     }
