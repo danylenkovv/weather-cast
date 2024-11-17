@@ -25,12 +25,7 @@ class Router
         if (method_exists($this->app, $action)) {
             $this->app->$action();
         } else {
-            http_response_code(404);
-            $this->app::render('errors', [
-                'status_code' => 404,
-                'error' => 'Not found',
-                'description' => 'The requested URL was not found'
-            ]);
+            $this->notFound();
         }
     }
 
@@ -41,7 +36,7 @@ class Router
      */
     private function getAction(): string
     {
-        return $_GET['action'] ?? 'index';
+        return Helpers::getUrlParam('action') ?? 'index';
     }
 
     /**
@@ -66,5 +61,19 @@ class Router
         $url = self::url($url);
         header('Location: ' . $url);
         exit();
+    }
+
+    /**
+     * Renders error page with not found data
+     * @return void
+     */
+    private function notFound(): void
+    {
+        http_response_code(404);
+        $this->app::render('errors', [
+            'status_code' => 404,
+            'error' => 'Not found',
+            'description' => 'The requested URL was not found'
+        ]);
     }
 }
