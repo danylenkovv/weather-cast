@@ -10,17 +10,12 @@ class WeatherController
      */
     public function current(string $city): void
     {
+        Validators::validateCity($city);
+
         $model = new Forecast();
         $forecast = $model->getForecast($city);
-        $currentWeather = $model->getCurrent($forecast);
-        unset($forecast);
 
-        App::render('daily', [
-            'location' => $currentWeather['location'],
-            'last_updated' => $currentWeather['last_updated'],
-            'current' => $currentWeather['current'],
-            'hours' => $currentWeather['hours']
-        ]);
+        App::render('daily', $model->getCurrent($forecast));
     }
 
     /**
@@ -32,17 +27,13 @@ class WeatherController
      */
     public function weekly(string $city, int $days): void
     {
+        Validators::validateCity($city);
+        Validators::validateDays($days);
+
         $model = new Forecast();
         $forecast = $model->getForecast($city, $days);
-        $weeklyWeather = $model->getWeekly($forecast);
-        unset($forecast);
 
-        App::render('weekly', [
-            'location' => $weeklyWeather['location'],
-            'last_updated' => $weeklyWeather['last_updated'],
-            'current' => $weeklyWeather['current'],
-            'days' => $weeklyWeather['days']
-        ]);
+        App::render('weekly', $model->getWeekly($forecast));
     }
 
     /**
@@ -53,19 +44,15 @@ class WeatherController
      * @param int $days The number of days for forecast - 14.
      * @return void
      */
-    public function daily(string $city, string $date, int $days): void
+    public function daily(string $city, string $date): void
     {
-        $model = new Forecast();
-        $forecast = $model->getForecast($city, $days);
-        $dailyWeather = $model->getForecastByDate($forecast, $date);
-        unset($forecast);
+        Validators::validateDate($date);
+        Validators::validateCity($city);
 
-        App::render('daily', [
-            'location' => $dailyWeather['location'],
-            'last_updated' => $dailyWeather['last_updated'],
-            'current' => $dailyWeather['current'],
-            'hours' => $dailyWeather['hours']
-        ]);
+        $model = new Forecast();
+        $forecast = $model->getForecast($city, FORECAST_DAYS[1]);
+
+        App::render('daily', $model->getForecastByDate($forecast, $date));
     }
 
     /**
@@ -73,19 +60,15 @@ class WeatherController
      *
      * @param string $city The city for which the forecast is to be retrieved.
      */
-    public function yesterday(string $city)
+    public function yesterday(string $city): void
     {
+        Validators::validateCity($city);
+
         $model = new SpecificDay();
         $date = date('Y-m-d', strtotime('-1 day'));
         $forecast = $model->getHistoryForecast($city, $date);
-        $specificDayWeather = $model->getSpecificDay($forecast);
-        unset($forecast);
 
-        App::render('daily', [
-            'location' => $specificDayWeather['location'],
-            'current' => $specificDayWeather['current'],
-            'hours' => $specificDayWeather['hours']
-        ]);
+        App::render('daily', $model->getSpecificDay($forecast));
     }
 
     /**
@@ -94,30 +77,18 @@ class WeatherController
      * @param string $city The city for which the forecast is to be retrieved.
      * @param string $date The specific date for the forecast in 'Y-m-d' format.
      */
-    public function specificDay(string $city, string $date)
+    public function specificDay(string $city, string $date): void
     {
+        Validators::validateDate($date);
+        Validators::validateCity($city);
+
         $model = new SpecificDay();
-        $currentDate = new DateTime();
-        $selectedDate = new DateTime($date);
-        $dateDifference = $currentDate->diff($selectedDate)->days;
+        $forecast = $model->getSpecificForecastData($model, $city, $date);
 
-        if ($selectedDate < $currentDate) {
-            $forecast = $model->getHistoryForecast($city, $date);
-        } elseif ($dateDifference >= 13) {
-            $forecast = $model->getFutureForecast($city, $date);
-        } else {
+        if (!$forecast) {
             Router::redirect("daily&date={$date}");
-            return;
         }
-
-        $specificDayWeather = $model->getSpecificDay($forecast);
-        unset($forecast);
-
-        App::render('daily', [
-            'location' => $specificDayWeather['location'],
-            'current' => $specificDayWeather['current'],
-            'hours' => $specificDayWeather['hours']
-        ]);
+        App::render('daily', $model->getSpecificDay($forecast));
     }
 
     /**
@@ -133,31 +104,26 @@ class WeatherController
 
         if (empty($query)) {
             echo json_encode([]);
-            exit;
+            exit();
         }
 
         $model = new Search();
         $result = $model->getSearchResults($query);
-        $cities = $model->getCities($result);
 
-        echo json_encode($cities);
-        exit;
+        echo json_encode($model->getCities($result));
+        exit();
     }
 
     /**
      * Sets the specified city in the session.
-     * Returns an HTTP status code of 200 if successful, or 400 if the city parameter is empty.
+     * Returns an HTTP status code of 200 if successful, or 400 if the city parameter is incorrect.
      *
      * @param string $city The name of the city to set in the session.
      * @return void
      */
     public function setCity(string $city): void
     {
-        if (empty($city)) {
-            http_response_code(400);
-            return;
-        }
-
+        Validators::validateCity($city);
         Session::destroy();
         Session::start();
         Session::set('city', $city);
