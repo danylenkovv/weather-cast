@@ -52,4 +52,23 @@ class SpecificDay extends Model
             'hours' => $hours
         ];
     }
+
+    /**
+     * Retrieves specific forecast data based on the date comparison.
+     *
+     * @param SpecificDay $model The model instance to fetch forecast data.
+     * @param string $city The city for which the forecast is retrieved.
+     * @param string $date The date for the forecast in 'Y-m-d' format.
+     * @return array|null Returns the forecast data or null if the date is within the current range.
+     */
+    public function getSpecificForecastData(SpecificDay $model, string $city, string $date): ?array
+    {
+        $dateComparison = Helpers::compareDates($date);
+
+        return match ($dateComparison) {
+            'past' => $model->getHistoryForecast($city, $date),
+            'future' => $model->getFutureForecast($city, $date),
+            default => null
+        };
+    }
 }
