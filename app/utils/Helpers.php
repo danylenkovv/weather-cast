@@ -2,7 +2,6 @@
 
 class Helpers
 {
-
     /**
      * Rounds specified numeric fields.
      *
@@ -50,7 +49,12 @@ class Helpers
      */
     public static function getUrlParam(string $param): string|null
     {
-        return isset($_GET[$param]) ? $_GET[$param] : null;
+        $result = isset($_GET[$param]) && in_array($param, ['action', 'date']) ?
+            filter_input(INPUT_GET, $param, FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
+        if (!$result) {
+            throw new ValidationException("Bad Request", 400, null, 'Incorrect URL parameters passed. Allowed parameters: action, date');
+        }
+        return $result;
     }
 
     /**
@@ -61,7 +65,7 @@ class Helpers
      */
     public static function getPostData(string $data): string|null
     {
-        return isset($_POST[$data]) ? $_POST[$data] : null;
+        return isset($_POST[$data]) ? filter_input(INPUT_POST, $data, FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
     }
 
     /**
@@ -74,12 +78,47 @@ class Helpers
     {
         $average = [];
         foreach ($fields as $field) {
-            $result = [];
-            foreach ($data as $d) {
-                $result[] = $d[$field];
-            }
-            $average[$field] = round(array_sum($result) / count($result));
+            $values = array_column($data, $field);
+            $average[$field] = round(array_sum($values) / count($values));
         }
         return $average;
+    }
+
+    /**
+     * Handles exceptions by rendering an error view.
+     *
+     * @param \Exception $e The exception to handle.
+     */
+    public static function handleException(\Exception $e): void
+    {
+        http_response_code($e->getCode());
+        App::render('errors', [
+            'status_code' => $e->getCode(),
+            'error' => $e->getMessage(),
+            'description' => $e->getDescription()
+        ]);
+    }
+
+    /**
+     * Compares a given date with the current date and determines its relative position.
+     *
+     * @param string $date The date to compare in 'Y-m-d' format.
+     * @return string Returns 'past', 'future', or 'current' based on the comparison.
+     */
+    public static function compareDates(string $date): string
+    {
+        $currentDate = new DateTime();
+        $selectedDate = new DateTime($date);
+        $dateDifference = $currentDate->diff($selectedDate)->days;
+
+        if ($selectedDate < $currentDate) {
+            return 'past';
+        }
+
+        if ($dateDifference >= 13) {
+            return 'future';
+        }
+
+        return 'current';
     }
 }
