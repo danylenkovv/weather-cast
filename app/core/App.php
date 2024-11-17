@@ -15,6 +15,7 @@ class App
     {
         extract($data);
         require "app/views/layouts/{$layout}.php";
+        exit();
     }
 
     /**
@@ -33,8 +34,7 @@ class App
      */
     public function weekly(): void
     {
-        //TODO Accessable only 7 days
-        (new WeatherController())->weekly(Session::get('city'), 7);
+        (new WeatherController())->weekly(Session::get('city'), FORECAST_DAYS[0]);
     }
     /**
      * twoWeeks action that render current weather and two weeks forecast
@@ -43,8 +43,7 @@ class App
      */
     public function two_weeks(): void
     {
-        //TODO Accessable only 14 days
-        (new WeatherController())->weekly(Session::get('city'), 14);
+        (new WeatherController())->weekly(Session::get('city'), FORECAST_DAYS[1]);
     }
 
     /**
@@ -54,7 +53,7 @@ class App
      */
     public function daily(): void
     {
-        (new WeatherController())->daily(Session::get('city'), Helpers::getUrlParam('date'), 14);
+        (new WeatherController())->daily(Session::get('city'), Helpers::getUrlParam('date'));
     }
 
     /**
