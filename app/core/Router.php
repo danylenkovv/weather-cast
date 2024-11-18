@@ -18,7 +18,7 @@ class Router
     {
         Session::start();
         if (!Session::get('city')) {
-            Session::set('city', 'Chernihiv');
+            Session::set('city', (new IpLookup())->getLocationByIp(Helpers::getIp()));
         }
         $action = $this->getAction();
 
