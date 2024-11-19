@@ -74,7 +74,7 @@ class Forecast extends Model
      * @param string $date The date to look for.
      * @return array The forecast for the specified date.
      */
-    protected function findDayForecast(array $forecastDays, string $date): array
+    private function findDayForecast(array $forecastDays, string $date): array
     {
         foreach ($forecastDays as $day) {
             if ($day['date'] === $date) {

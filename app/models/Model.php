@@ -43,7 +43,7 @@ class Model
      * @param mixed $dayOrDate The number of days for forecast or data in YYYY-MM-DD format (optional).
      * @return string The constructed API URL.
      */
-    public function getApiUrl(string $endpoint, string $city, mixed $daysOrDate = null): string
+    protected function getApiUrl(string $endpoint, string $city, mixed $daysOrDate = null): string
     {
         $city = urlencode($city);
         $url = $this->apiUrl . $endpoint . '?key=' . $this->apiKey . '&q=' . $city;
