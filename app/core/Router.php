@@ -36,6 +36,7 @@ class Router
      */
     private function getAction(): string
     {
+        Validators::validateUrlParams();
         return Helpers::getUrlParam('action') ?? 'index';
     }
 
