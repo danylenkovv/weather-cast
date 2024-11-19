@@ -1,6 +1,7 @@
 <?php
 const BASE_URL = 'http://api.weatherapi.com/v1/';
 const FORECAST_DAYS = [7, 14];
+const ALLOWED_URL_PARAMS = ['action', 'date'];
 const JS_PATH = 'public' . DIRECTORY_SEPARATOR . 'js' . DIRECTORY_SEPARATOR;
 const CSS_PATH = 'public' . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR;
 const IMG_PATH = 'public' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR;
