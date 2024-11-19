@@ -1,4 +1,4 @@
-<a href="<?= Router::url() ?>">
+<a href="/">
     <div class="full-logo">
         <div class="logo">
             <img src="<?= IMG_PATH . 'moon.png'; ?>" alt="Moon Logo" />
