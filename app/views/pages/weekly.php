@@ -14,8 +14,9 @@
                     <span><?= $day['mintemp_c']; ?></span>
                 </div>
                 <div class="other-values">
-                    <span><i class="fa-solid fa-wind"></i> <?= $day['maxwind_kph']; ?> kph,</span>
-                    <span><i class="fa-solid fa-cloud-rain"></i> <?= $day['daily_chance_of_rain']; ?>%</span>
+                    <div><i class="fa-solid fa-wind"></i> <?= $day['maxwind_kph']; ?> kph,</div>
+                    <div><i class="fa-solid fa-cloud-rain"></i> <?= $day['daily_chance_of_rain']; ?> %, </div>
+                    <div><i class="fa-regular fa-snowflake"></i> <?= $day['daily_chance_of_snow']; ?> %</div>
                 </div>
             </a>
         </div>

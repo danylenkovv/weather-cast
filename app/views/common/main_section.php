@@ -4,19 +4,19 @@
         <p class="date">
             <?= $current['date'] ?>
             <?php if (isset($_GET['action']) && $_GET['action'] != 'yesterday' && $_GET['action'] != 'specific_day') : ?>
-                <span>Updated at: <?= $last_updated['last_updated'] ?></span>
-            <?php endif; ?>
-        </p>
-        <div class="weather-params">
-            <div class="col">
-                <span><i class="fa-solid fa-wind"></i> <?= $current['current']['wind_kph'] ?> kph</span>
-                <span><i class="fa-solid fa-droplet"></i><?= $current['current']['humidity'] ?>%</span>
-            </div>
-            <div class="col">
-                <span><i class="fa-solid fa-cloud-rain"></i><?= $current['current']['chance_of_rain'] ?>%</span>
-                <span><i class="fa-regular fa-snowflake"></i><?= $current['current']['chance_of_snow'] ?>%</span>
-            </div>
+        <div>Updated at: <?= $last_updated['last_updated'] ?></div>
+    <?php endif; ?>
+    </p>
+    <div class="weather-params">
+        <div class="col">
+            <span><i class="fa-solid fa-wind"></i> <?= $current['current']['wind_kph'] ?> kph</span>
+            <span><i class="fa-solid fa-droplet"></i><?= $current['current']['humidity'] ?>%</span>
         </div>
+        <div class="col">
+            <span><i class="fa-solid fa-cloud-rain"></i><?= $current['current']['chance_of_rain'] ?>%</span>
+            <span><i class="fa-regular fa-snowflake"></i><?= $current['current']['chance_of_snow'] ?>%</span>
+        </div>
+    </div>
     </div>
     <div class="temperature">
         <div class="icon">

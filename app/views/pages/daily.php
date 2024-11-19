@@ -13,8 +13,9 @@
                 <span><?= $hour['feelslike_c']; ?></span>
             </div>
             <div class="other-values">
-                <span><i class="fa-solid fa-wind"></i> <?= $hour['wind_kph']; ?> kph,</span>
-                <span><i class="fa-solid fa-cloud-rain"></i> <?= $hour['chance_of_rain']; ?>%</span>
+                <div><i class="fa-solid fa-wind"></i> <?= $hour['wind_kph']; ?> kph,</div>
+                <div><i class="fa-solid fa-cloud-rain"></i> <?= $hour['chance_of_rain']; ?> %,</div>
+                <div><i class="fa-regular fa-snowflake"></i> <?= $hour['chance_of_snow']; ?> %</div>
             </div>
         </div>
     <?php endforeach; ?>

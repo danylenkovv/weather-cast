@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeBtnCalendar = modalCalendar.querySelector(".close-btn");
 
   const modalSearch = document.getElementById("modalSearch");
-  const searchIcon = document.querySelector(".fa-magnifying-glass");
+  const searchIcon = document.querySelector(".search");
   const closeBtnSearch = modalSearch.querySelector(".close-btn");
 
   const toggleModal = (modalWindow, display) => {
