@@ -46,4 +46,18 @@ class Validators
             throw new ValidationException("Bad Request", 400, null, "Incorrect date input. Date must be in range: 1 year ago - 300 days ahead");
         }
     }
+
+    /**
+     * Validates the inputed URL params
+     * @throws ValidationException If the date is invalid or out of the allowed range.
+     */
+    public static function validateUrlParams(): void
+    {
+        $queryParams = array_keys($_GET);
+
+        $invalidParams = array_diff($queryParams, ALLOWED_URL_PARAMS);
+        if (!empty($invalidParams)) {
+            throw new ValidationException("Bad Request", 400, null, 'Incorrect URL parameters passed. Allowed parameters: action, date');
+        }
+    }
 }
