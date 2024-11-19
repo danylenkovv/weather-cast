@@ -47,14 +47,9 @@ class Helpers
      * @param string $param The name of the parameter to retrieve.
      * @return string|null The value of the parameter if it exists, otherwise null.
      */
-    public static function getUrlParam(string $param): string|null
+    public static function getUrlParam(string $param): ?string
     {
-        $result = isset($_GET[$param]) && in_array($param, ['action', 'date']) ?
-            filter_input(INPUT_GET, $param, FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
-        if (!$result) {
-            throw new ValidationException("Bad Request", 400, null, 'Incorrect URL parameters passed. Allowed parameters: action, date');
-        }
-        return $result;
+        return isset($_GET[$param]) ? filter_input(INPUT_GET, $param, FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
     }
 
     /**
