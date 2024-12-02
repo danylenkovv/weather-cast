@@ -3,7 +3,7 @@
 namespace app\utils;
 
 use DateTime;
-use app\core\App;
+use app\core\View;
 
 class Helpers
 {
@@ -46,16 +46,6 @@ class Helpers
         $date = new DateTime($datetime);
         return $date->format('l, F j, Y');
     }
-    /**
-     * Retrieves a URL parameter from the GET request.
-     *
-     * @param string $param The name of the parameter to retrieve.
-     * @return string|null The value of the parameter if it exists, otherwise null.
-     */
-    public static function getUrlParam(string $param): ?string
-    {
-        return isset($_GET[$param]) ? filter_input(INPUT_GET, $param, FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
-    }
 
     /**
      * Retrieves data from the POST request.
@@ -92,7 +82,7 @@ class Helpers
     public static function handleException(\Exception $e): void
     {
         http_response_code($e->getCode());
-        App::render('errors', [
+        View::render('errors', [
             'status_code' => $e->getCode(),
             'error' => $e->getMessage(),
             'description' => $e->getDescription()
