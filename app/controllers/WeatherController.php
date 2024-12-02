@@ -2,30 +2,44 @@
 
 namespace app\controllers;
 
-use app\core\App;
 use app\models\Forecast;
 use app\utils\Validators;
 use app\core\Session;
 use app\models\SpecificDay;
 use app\models\Search;
 use app\core\Router;
+use app\utils\Helpers;
+use app\core\View;
 
 class WeatherController
 {
+    protected ?string $city;
+    protected Forecast $forecastModel;
+    protected Search $searchModel;
+    protected SpecificDay $specificDayModel;
+    protected View $view;
+
+    public function __construct()
+    {
+        Session::start();
+        $this->city = Session::get('city');
+        $this->forecastModel = new Forecast();
+        $this->searchModel = new Search();
+        $this->specificDayModel = new SpecificDay();
+        $this->view = new View();
+    }
+
     /**
      * Displays the current weather and hourly forecast for the specified city.
      *
      * @param string $city The name of the city for which to display weather data.
      * @return void
      */
-    public function current(string $city): void
+    public function current(): void
     {
-        Validators::validateCity($city);
+        $forecast = $this->forecastModel->getForecast($this->city);
 
-        $model = new Forecast();
-        $forecast = $model->getForecast($city);
-
-        App::render('daily', $model->getCurrent($forecast));
+        $this->view::render('daily', $this->forecastModel->getCurrent($forecast));
     }
 
     /**
@@ -35,15 +49,18 @@ class WeatherController
      * @param int $days The number of days for forecast - 7 or 14.
      * @return void
      */
-    public function weekly(string $city, int $days): void
+    public function weekly(): void
     {
-        Validators::validateCity($city);
-        Validators::validateDays($days);
+        $forecast = $this->forecastModel->getForecast($this->city, FORECAST_DAYS[0]);
 
-        $model = new Forecast();
-        $forecast = $model->getForecast($city, $days);
+        $this->view::render('weekly', $this->forecastModel->getWeekly($forecast));
+    }
 
-        App::render('weekly', $model->getWeekly($forecast));
+    public function two_weeks(): void
+    {
+        $forecast = $this->forecastModel->getForecast($this->city, FORECAST_DAYS[1]);
+
+        $this->view::render('weekly', $this->forecastModel->getWeekly($forecast));
     }
 
     /**
@@ -54,15 +71,14 @@ class WeatherController
      * @param int $days The number of days for forecast - 14.
      * @return void
      */
-    public function daily(string $city, string $date): void
+    public function daily(array $params): void
     {
+        $date = $params[0];
         Validators::validateDate($date);
-        Validators::validateCity($city);
 
-        $model = new Forecast();
-        $forecast = $model->getForecast($city, FORECAST_DAYS[1]);
+        $forecast = $this->forecastModel->getForecast($this->city, FORECAST_DAYS[1]);
 
-        App::render('daily', $model->getForecastByDate($forecast, $date));
+        $this->view::render('daily', $this->forecastModel->getForecastByDate($forecast, $date));
     }
 
     /**
@@ -70,15 +86,12 @@ class WeatherController
      *
      * @param string $city The city for which the forecast is to be retrieved.
      */
-    public function yesterday(string $city): void
+    public function yesterday(): void
     {
-        Validators::validateCity($city);
-
-        $model = new SpecificDay();
         $date = date('Y-m-d', strtotime('-1 day'));
-        $forecast = $model->getHistoryForecast($city, $date);
+        $forecast = $this->specificDayModel->getHistoryForecast($this->city, $date);
 
-        App::render('daily', $model->getSpecificDay($forecast));
+        $this->view::render('daily', $this->specificDayModel->getSpecificDay($forecast));
     }
 
     /**
@@ -87,18 +100,17 @@ class WeatherController
      * @param string $city The city for which the forecast is to be retrieved.
      * @param string $date The specific date for the forecast in 'Y-m-d' format.
      */
-    public function specificDay(string $city, string $date): void
+    public function specific_day(array $params): void
     {
+        $date = $params[0];
         Validators::validateDate($date);
-        Validators::validateCity($city);
 
-        $model = new SpecificDay();
-        $forecast = $model->getSpecificForecastData($model, $city, $date);
+        $forecast = $this->specificDayModel->getSpecificForecastData($this->specificDayModel, $this->city, $date);
 
         if (!$forecast) {
             Router::redirect("/daily/{$date}");
         }
-        App::render('daily', $model->getSpecificDay($forecast));
+        $this->view::render('daily', $this->specificDayModel->getSpecificDay($forecast));
     }
 
     /**
@@ -108,19 +120,19 @@ class WeatherController
      * @param string $query The city name or keyword to search for.
      * @return void
      */
-    public function searchCity(string $query): void
+    public function searchCity(): void
     {
         header('Content-Type: application/json');
+        $query = Helpers::getPostData('query');
 
         if (empty($query)) {
             echo json_encode([]);
             exit();
         }
 
-        $model = new Search();
-        $result = $model->getSearchResults($query);
+        $result = $this->searchModel->getSearchResults($query);
 
-        echo json_encode($model->getCities($result));
+        echo json_encode($this->searchModel->getCities($result));
         exit();
     }
 
@@ -131,8 +143,9 @@ class WeatherController
      * @param string $city The name of the city to set in the session.
      * @return void
      */
-    public function setCity(string $city): void
+    public function setCity(): void
     {
+        $city = Helpers::getPostData('city');
         Validators::validateCity($city);
         Session::destroy();
         Session::start();
