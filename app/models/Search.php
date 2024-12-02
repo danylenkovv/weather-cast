@@ -1,5 +1,9 @@
 <?php
 
+namespace app\models;
+
+use app\models\Model;
+
 class Search extends Model
 {
     private string $endpoint = 'search.json';

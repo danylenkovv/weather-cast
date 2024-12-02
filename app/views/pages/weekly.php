@@ -1,7 +1,7 @@
 <div class="weather-items">
     <?php foreach ($days as $day): ?>
         <div class="item <?= date('Y-m-d') === $day['date'] ? 'active' : ''; ?>">
-            <a href="<?= Router::url('daily/' . $day['date']) ?>" class="item-link">
+            <a href="<?= \app\core\Router::url('daily/' . $day['date']) ?>" class="item-link">
                 <div class="icon">
                     <img src="<?= $day['icon']; ?>" alt="Weather Icon" />
                 </div>

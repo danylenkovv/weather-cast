@@ -1,5 +1,9 @@
 <?php
 
+namespace app\models;
+
+use app\models\Model;
+
 class Forecast extends Model
 {
     private string $endpoint = 'forecast.json';

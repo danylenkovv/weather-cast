@@ -1,4 +1,9 @@
 <?php
+
+namespace app\models;
+
+use app\models\Model;
+
 class IpLookup extends Model
 {
     private string $endpoint = 'ip.json';

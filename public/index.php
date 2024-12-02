@@ -1,9 +1,7 @@
 <?php
 
 try {
-    require_once '../app/config/bootstrap.php';
-} catch (ValidationException $e) {
-    Helpers::handleException($e);
+    require_once '../app/bootstrap.php';
 } catch (\Exception $e) {
-    Helpers::handleException($e);
+    app\utils\Helpers::handleException($e);
 }

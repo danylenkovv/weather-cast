@@ -1,5 +1,9 @@
 <?php
 
+namespace app\utils;
+
+use Exception;
+
 class ValidationException extends Exception
 {
     private $description;

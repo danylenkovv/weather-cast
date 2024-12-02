@@ -1,5 +1,11 @@
 <?php
 
+namespace app\core;
+
+use app\core\Session;
+use app\utils\Helpers;
+use app\models\IpLookup;
+
 class Router
 {
     private App $app;

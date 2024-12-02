@@ -10,7 +10,7 @@
     <div class="search">
         <div class="location">
             <i class="fa-regular fa-paper-plane"></i>
-            <p><?= Session::get('city') ?></p>
+            <p><?= \app\core\Session::get('city') ?></p>
         </div>
         <div><i class="fa-solid fa-magnifying-glass"></i></div>
     </div>

@@ -1,5 +1,15 @@
 <?php
 
+namespace app\controllers;
+
+use app\core\App;
+use app\models\Forecast;
+use app\utils\Validators;
+use app\core\Session;
+use app\models\SpecificDay;
+use app\models\Search;
+use app\core\Router;
+
 class WeatherController
 {
     /**

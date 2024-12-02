@@ -1,5 +1,9 @@
 <?php
 
+namespace app\utils;
+
+use Exception;
+
 class ApiException extends Exception
 {
     private $description;

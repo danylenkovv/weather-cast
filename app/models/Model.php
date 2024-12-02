@@ -1,5 +1,10 @@
 <?php
 
+namespace app\models;
+
+use app\utils\ApiException;
+use app\utils\Helpers;
+
 class Model
 {
     private string $apiUrl = BASE_URL;

@@ -1,5 +1,10 @@
 <?php
 
+namespace app\models;
+
+use app\models\Model;
+use app\utils\Helpers;
+
 class SpecificDay extends Model
 {
     private string $endpointHistory = 'history.json';

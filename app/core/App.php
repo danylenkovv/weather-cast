@@ -1,5 +1,11 @@
 <?php
 
+namespace app\core;
+
+use app\controllers\WeatherController;
+use app\core\Session;
+use app\utils\Helpers;
+
 class App
 {
 
