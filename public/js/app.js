@@ -16,7 +16,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: '/index.php?action=searchCity',
+            url: '/searchCity',
             method: 'POST',
             data: { query: cityQuery },
             success: function(response) {
@@ -53,11 +53,11 @@ $(document).ready(function() {
 
     function selectCity(cityName) {
         $.ajax({
-            url: '/index.php?action=setCity', 
+            url: '/setCity', 
             method: 'POST',
             data: { city: cityName },
             success: function() {
-                window.location.href = '/index.php?action=index';
+                window.location.href = '/';
             },
             error: function(xhr, status, error) {
                 console.error('Error during city selection:', status, error);

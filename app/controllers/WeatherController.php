@@ -86,7 +86,7 @@ class WeatherController
         $forecast = $model->getSpecificForecastData($model, $city, $date);
 
         if (!$forecast) {
-            Router::redirect("daily&date={$date}");
+            Router::redirect("/daily/{$date}");
         }
         App::render('daily', $model->getSpecificDay($forecast));
     }

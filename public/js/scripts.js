@@ -163,7 +163,7 @@ function createDatePicker() {
   selectedDate.setHours(12, 0, 0, 0);
   
   const formattedDate = selectedDate.toISOString().split('T')[0];
-  window.location.href = `index.php?action=specific_day&date=${formattedDate}`;
+  window.location.href = `/specific_day/${formattedDate}`;
   };
 
 

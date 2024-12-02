@@ -14,7 +14,7 @@ class App
     public static function render(string $page, array $data = [], string $layout = 'default'): void
     {
         extract($data);
-        require "app/views/layouts/{$layout}.php";
+        require "../app/views/layouts/{$layout}.php";
         exit();
     }
 
@@ -51,9 +51,9 @@ class App
      *
      * @return void
      */
-    public function daily(): void
+    public function daily(array $params): void
     {
-        (new WeatherController())->daily(Session::get('city'), Helpers::getUrlParam('date'));
+        (new WeatherController())->daily(Session::get('city'), $params[0]);
     }
 
     /**
@@ -72,9 +72,9 @@ class App
      *
      * @return void
      */
-    public function specific_day(): void
+    public function specific_day(array $params): void
     {
-        (new WeatherController())->specificDay(Session::get('city'), Helpers::getUrlParam('date'));
+        (new WeatherController())->specificDay(Session::get('city'), $params[0]);
     }
 
     /**
