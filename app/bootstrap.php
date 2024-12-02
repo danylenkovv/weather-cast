@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config.php';
+require_once 'constants.php';
 /**
  * Load params from .conf file
  * @throws \app\utils\SystemException
