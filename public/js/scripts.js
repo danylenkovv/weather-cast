@@ -31,18 +31,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Add active class to links
     function setActiveLink() {
-        const currentAction = new URLSearchParams(window.location.search).get("action");
-        const links = document.querySelectorAll(".links a");
+    const pathname = window.location.pathname;
+    const links = document.querySelectorAll(".links a");
 
-        links.forEach(link => {
-            const linkAction = new URL(link.href).searchParams.get("action");
-            if (linkAction === currentAction) {
-                link.classList.add("active");
-            } else {
-                link.classList.remove("active");
-            }
-        });
-    }
+    links.forEach(link => {
+        const linkPath = new URL(link.href).pathname;
+        const isActive = (pathname === "/" && linkPath === "/") || (pathname !== "/" && linkPath.split("/")[1] === pathname.split("/")[1]);
+                         
+        link.classList.toggle("active", isActive);
+    });
+  }
 
     setActiveLink();
     updateCarousel();
