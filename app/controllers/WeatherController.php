@@ -17,7 +17,6 @@ class WeatherController
     protected Forecast $forecastModel;
     protected Search $searchModel;
     protected SpecificDay $specificDayModel;
-    protected View $view;
 
     public function __construct()
     {
@@ -27,7 +26,6 @@ class WeatherController
         $this->forecastModel = new Forecast();
         $this->searchModel = new Search();
         $this->specificDayModel = new SpecificDay();
-        $this->view = new View();
     }
 
     /**
@@ -38,7 +36,7 @@ class WeatherController
     {
         $forecast = $this->forecastModel->getForecast($this->city);
 
-        $this->view::render('daily', $this->forecastModel->getCurrent($forecast));
+        View::render('daily', $this->forecastModel->getCurrent($forecast));
     }
 
     /**
@@ -49,7 +47,7 @@ class WeatherController
     {
         $forecast = $this->forecastModel->getForecast($this->city, FORECAST_DAYS[0]);
 
-        $this->view::render('weekly', $this->forecastModel->getWeekly($forecast));
+        View::render('weekly', $this->forecastModel->getWeekly($forecast));
     }
 
     /**
@@ -60,7 +58,7 @@ class WeatherController
     {
         $forecast = $this->forecastModel->getForecast($this->city, FORECAST_DAYS[1]);
 
-        $this->view::render('weekly', $this->forecastModel->getWeekly($forecast));
+        View::render('weekly', $this->forecastModel->getWeekly($forecast));
     }
 
     /**
@@ -79,7 +77,7 @@ class WeatherController
 
         $forecast = $this->forecastModel->getForecast($this->city, FORECAST_DAYS[1]);
 
-        $this->view::render('daily', $this->forecastModel->getForecastByDate($forecast, $date));
+        View::render('daily', $this->forecastModel->getForecastByDate($forecast, $date));
     }
 
     /**
@@ -91,7 +89,7 @@ class WeatherController
         $date = date('Y-m-d', strtotime('-1 day'));
         $forecast = $this->specificDayModel->getHistoryForecast($this->city, $date);
 
-        $this->view::render('daily', $this->specificDayModel->getSpecificDay($forecast));
+        View::render('daily', $this->specificDayModel->getSpecificDay($forecast));
     }
 
     /**
@@ -109,7 +107,7 @@ class WeatherController
         if (!$forecast) {
             Router::redirect("/daily/{$date}");
         }
-        $this->view::render('daily', $this->specificDayModel->getSpecificDay($forecast));
+        View::render('daily', $this->specificDayModel->getSpecificDay($forecast));
     }
 
     /**
