@@ -2,18 +2,20 @@
 
 namespace app\core;
 
+use app\controllers\WeatherController;
+use app\core\View;
 use app\core\Session;
 use app\utils\Helpers;
 use app\models\IpLookup;
 
 class Router
 {
-    private App $app;
+    private WeatherController $controller;
     private array $urlComponents = [];
 
     public function __construct()
     {
-        $this->app = new App();
+        $this->controller = new WeatherController();
         $this->parseUrl();
     }
 
@@ -25,17 +27,15 @@ class Router
     public function init(): void
     {
         Session::start();
-
-        // Встановлюємо місто за IP, якщо ще не вибрано.
         if (!Session::get('city')) {
             Session::set('city', (new IpLookup())->getLocationByIp(Helpers::getIp()));
         }
 
         $action = $this->getAction();
 
-        if (method_exists($this->app, $action)) {
-            // Виклик методу `App`.
-            $this->app->$action($this->getParams());
+        if (method_exists($this->controller, $action)) {
+            // Виклик методу `controller`.
+            $this->controller->$action($this->getParams());
         } else {
             $this->notFound();
         }
@@ -64,7 +64,7 @@ class Router
      */
     private function getAction(): string
     {
-        return empty($this->urlComponents[0]) ? 'index' : $this->urlComponents[0];
+        return empty($this->urlComponents[0]) ? 'current' : $this->urlComponents[0];
     }
 
     /**
@@ -84,7 +84,7 @@ class Router
      * @param array $params Параметри.
      * @return string Сформований URL.
      */
-    public static function url(string $action = 'index', array $params = []): string
+    public static function url(string $action = 'current', array $params = []): string
     {
         $url = '/' . $action;
         if (!empty($params)) {
@@ -113,7 +113,7 @@ class Router
     private function notFound(): void
     {
         http_response_code(404);
-        $this->app::render('errors', [
+        View::render('errors', [
             'status_code' => 404,
             'error' => 'Not found',
             'description' => 'The requested URL was not found'
