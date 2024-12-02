@@ -76,6 +76,10 @@ class WeatherController
         $date = $params[0];
         Validators::validateDate($date);
 
+        if (Helpers::compareDates($date) != 'current') {
+            Router::redirect("/specific_day/{$date}");
+        }
+
         $forecast = $this->forecastModel->getForecast($this->city, FORECAST_DAYS[1]);
 
         $this->view::render('daily', $this->forecastModel->getForecastByDate($forecast, $date));
