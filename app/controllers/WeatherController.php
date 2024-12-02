@@ -23,6 +23,7 @@ class WeatherController
     {
         Session::start();
         $this->city = Session::get('city');
+        Validators::validateCity($this->city);
         $this->forecastModel = new Forecast();
         $this->searchModel = new Search();
         $this->specificDayModel = new SpecificDay();
@@ -31,8 +32,6 @@ class WeatherController
 
     /**
      * Displays the current weather and hourly forecast for the specified city.
-     *
-     * @param string $city The name of the city for which to display weather data.
      * @return void
      */
     public function current(): void
@@ -43,10 +42,7 @@ class WeatherController
     }
 
     /**
-     * Displays the current weather and daily forecast for the specified city and days.
-     *
-     * @param string $city The name of the city for which to display weather data.
-     * @param int $days The number of days for forecast - 7 or 14.
+     * Displays the current weather and weekly forecast for the specified city.
      * @return void
      */
     public function weekly(): void
@@ -56,6 +52,10 @@ class WeatherController
         $this->view::render('weekly', $this->forecastModel->getWeekly($forecast));
     }
 
+    /**
+     * Displays the current weather and two-weeks forecast for the specified city.
+     * @return void
+     */
     public function two_weeks(): void
     {
         $forecast = $this->forecastModel->getForecast($this->city, FORECAST_DAYS[1]);
@@ -65,10 +65,7 @@ class WeatherController
 
     /**
      * Displays the average weather and hourly forecast for the specified city and date.
-     *
-     * @param string $city The name of the city for which to display weather data.
-     * @param string $date The date for which to display detailed weather data.
-     * @param int $days The number of days for forecast - 14.
+     * @param array $params The date for the forecast in 'Y-m-d' format.
      * @return void
      */
     public function daily(array $params): void
@@ -87,8 +84,7 @@ class WeatherController
 
     /**
      * Displays the weather forecast for the previous day.
-     *
-     * @param string $city The city for which the forecast is to be retrieved.
+     * @return void
      */
     public function yesterday(): void
     {
@@ -100,9 +96,8 @@ class WeatherController
 
     /**
      * Displays the weather forecast for a specific date, adjusting based on whether the date is past, future, or near-future.
-     *
-     * @param string $city The city for which the forecast is to be retrieved.
-     * @param string $date The specific date for the forecast in 'Y-m-d' format.
+     * @param array $params The specific date for the forecast in 'Y-m-d' format.
+     * @return void
      */
     public function specific_day(array $params): void
     {
@@ -120,8 +115,6 @@ class WeatherController
     /**
      * Handles the search for a city based on the provided query string.
      * Outputs the search results as a JSON response.
-     *
-     * @param string $query The city name or keyword to search for.
      * @return void
      */
     public function searchCity(): void
@@ -143,8 +136,6 @@ class WeatherController
     /**
      * Sets the specified city in the session.
      * Returns an HTTP status code of 200 if successful, or 400 if the city parameter is incorrect.
-     *
-     * @param string $city The name of the city to set in the session.
      * @return void
      */
     public function setCity(): void

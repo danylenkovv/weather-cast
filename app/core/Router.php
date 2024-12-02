@@ -20,7 +20,7 @@ class Router
     }
 
     /**
-     * Ініціалізує додаток, обробляючи URL.
+     * Init the app, handle URL.
      *
      * @return void
      */
@@ -34,7 +34,6 @@ class Router
         $action = $this->getAction();
 
         if (method_exists($this->controller, $action)) {
-            // Виклик методу `controller`.
             $this->controller->$action($this->getParams());
         } else {
             $this->notFound();
@@ -42,7 +41,7 @@ class Router
     }
 
     /**
-     * Розбирає URL на компоненти.
+     * Parse URL into components.
      *
      * @return void
      */
@@ -51,14 +50,13 @@ class Router
         $url = trim($_SERVER['REQUEST_URI'], '/');
         $this->urlComponents = explode('/', $url);
 
-        // Видаляємо перший рівень, якщо це підкаталог.
         if (!empty($this->urlComponents[0]) && $this->urlComponents[0] === 'index.php') {
             array_shift($this->urlComponents);
         }
     }
 
     /**
-     * Отримує дію (action) з URL.
+     * Get action from URL.
      *
      * @return string
      */
@@ -68,7 +66,7 @@ class Router
     }
 
     /**
-     * Отримує параметри з URL.
+     * Get params from URL.
      *
      * @return array
      */
@@ -78,11 +76,11 @@ class Router
     }
 
     /**
-     * Генерує URL для дії.
+     * Generate URL for action.
      *
-     * @param string $action Дія (action).
-     * @param array $params Параметри.
-     * @return string Сформований URL.
+     * @param string $action
+     * @param array $params - Some params, like date.
+     * @return string Generated URL.
      */
     public static function url(string $action = 'current', array $params = []): string
     {
@@ -94,7 +92,7 @@ class Router
     }
 
     /**
-     * Перенаправляє користувача на вказаний URL.
+     * Redirect to specified URL.
      *
      * @param string $url
      * @return never
@@ -106,7 +104,7 @@ class Router
     }
 
     /**
-     * Показує сторінку 404.
+     * Show 404 page.
      *
      * @return void
      */
