@@ -3,69 +3,105 @@
 class Router
 {
     private App $app;
+    private array $urlComponents = [];
 
     public function __construct()
     {
         $this->app = new App();
+        $this->parseUrl();
     }
 
     /**
-     * Initializes the application by handling the request action.
+     * Ініціалізує додаток, обробляючи URL.
      *
      * @return void
      */
     public function init(): void
     {
         Session::start();
+
+        // Встановлюємо місто за IP, якщо ще не вибрано.
         if (!Session::get('city')) {
             Session::set('city', (new IpLookup())->getLocationByIp(Helpers::getIp()));
         }
+
         $action = $this->getAction();
 
         if (method_exists($this->app, $action)) {
-            $this->app->$action();
+            // Виклик методу `App`.
+            $this->app->$action($this->getParams());
         } else {
             $this->notFound();
         }
     }
 
     /**
-     * Retrieves the action from the query parameters or defaults to 'index'.
+     * Розбирає URL на компоненти.
      *
-     * @return string The action name.
+     * @return void
+     */
+    private function parseUrl(): void
+    {
+        $url = trim($_SERVER['REQUEST_URI'], '/');
+        $this->urlComponents = explode('/', $url);
+
+        // Видаляємо перший рівень, якщо це підкаталог.
+        if (!empty($this->urlComponents[0]) && $this->urlComponents[0] === 'index.php') {
+            array_shift($this->urlComponents);
+        }
+    }
+
+    /**
+     * Отримує дію (action) з URL.
+     *
+     * @return string
      */
     private function getAction(): string
     {
-        Validators::validateUrlParams();
-        return Helpers::getUrlParam('action') ?? 'index';
+        return empty($this->urlComponents[0]) ? 'index' : $this->urlComponents[0];
     }
 
     /**
-     * Generates a URL for the specified action.
+     * Отримує параметри з URL.
      *
-     * @param string $action The action for which to generate the URL.
-     * @return string The generated URL.
+     * @return array
      */
-    public static function url(string $action = 'index'): string
+    private function getParams(): array
     {
-        return "index.php?action=" . $action;
+        return array_slice($this->urlComponents, 1);
     }
 
     /**
-     * Redirects the user to the specified URL.
+     * Генерує URL для дії.
      *
-     * @param string $url The URL to redirect to.
+     * @param string $action Дія (action).
+     * @param array $params Параметри.
+     * @return string Сформований URL.
+     */
+    public static function url(string $action = 'index', array $params = []): string
+    {
+        $url = '/' . $action;
+        if (!empty($params)) {
+            $url .= '/' . implode('/', $params);
+        }
+        return $url;
+    }
+
+    /**
+     * Перенаправляє користувача на вказаний URL.
+     *
+     * @param string $url
      * @return never
      */
-    public static function redirect(string $url): never
+    public static function redirect(string $url = '/'): never
     {
-        $url = self::url($url);
         header('Location: ' . $url);
         exit();
     }
 
     /**
-     * Renders error page with not found data
+     * Показує сторінку 404.
+     *
      * @return void
      */
     private function notFound(): void
