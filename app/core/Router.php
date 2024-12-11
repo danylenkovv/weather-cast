@@ -31,10 +31,11 @@ class Router
             Session::set('city', (new IpLookup())->getLocationByIp(Helpers::getIp()));
         }
 
+        $controller = new WeatherController();
         $action = $this->getAction();
 
-        if (method_exists($this->controller, $action)) {
-            $this->controller->$action($this->getParams());
+        if (method_exists($controller, $action)) {
+            $controller->$action($this->getParams());
         } else {
             $this->notFound();
         }
