@@ -4,9 +4,6 @@ namespace app\core;
 
 use app\controllers\WeatherController;
 use app\core\View;
-use app\core\Session;
-use app\utils\Helpers;
-use app\models\IpLookup;
 
 class Router
 {
@@ -26,11 +23,6 @@ class Router
      */
     public function init(): void
     {
-        Session::start();
-        if (!Session::get('city')) {
-            Session::set('city', (new IpLookup())->getLocationByIp(Helpers::getIp()));
-        }
-
         $action = $this->getAction();
 
         if (method_exists($this->controller, $action)) {

@@ -10,10 +10,11 @@ use app\models\Search;
 use app\core\Router;
 use app\utils\Helpers;
 use app\core\View;
+use app\models\IpLookup;
 
 class WeatherController
 {
-    protected ?string $city;
+    protected string $city;
     protected Forecast $forecastModel;
     protected Search $searchModel;
     protected SpecificDay $specificDayModel;
@@ -21,7 +22,8 @@ class WeatherController
     public function __construct()
     {
         Session::start();
-        $this->city = Session::get('city');
+        $this->city = Session::get('city') ?? (new IpLookup())->getLocationByIp(Helpers::getIp());
+        Session::set('city', $this->city);
         Validators::validateCity($this->city);
         $this->forecastModel = new Forecast();
         $this->searchModel = new Search();
